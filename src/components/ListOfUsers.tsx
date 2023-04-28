@@ -1,3 +1,4 @@
+import { useAppSelector, useUserActions } from "../hooks";
 import {
 	Badge,
 	Card,
@@ -9,10 +10,15 @@ import {
 	TableRow,
 	Title,
 } from "@tremor/react";
-import { useAppSelector } from "../hooks";
 
 export default function ListOfUsers() {
-	const users = useAppSelector((state) => state.users);
+	const users = useAppSelector(
+		(state) => state.users,
+		(prev, next) => prev.length === next.length,
+	);
+
+	const { removeUser } = useUserActions();
+
 	return (
 		<Card>
 			<Title className="flex gap-2 mx-3 mb-2">
@@ -33,7 +39,7 @@ export default function ListOfUsers() {
 				<TableBody>
 					{users.map((item) => (
 						<TableRow
-							key={item.name}
+							key={item.id}
 							className="hover:bg-gray-100/75 cursor-pointer "
 						>
 							<TableCell>{item.id}</TableCell>
@@ -64,8 +70,13 @@ export default function ListOfUsers() {
 									</svg>
 								</button>
 
-								<button type="button" className="text-gray-400">
+								<button
+									onClick={() => removeUser(item.id)}
+									type="button"
+									className="text-gray-400"
+								>
 									<svg
+										aria-label="remove item"
 										xmlns="http://www.w3.org/2000/svg"
 										fill="none"
 										viewBox="0 0 24 24"
