@@ -8,6 +8,7 @@ import {
 	TableHead,
 	TableHeaderCell,
 	TableRow,
+	Text,
 	Title,
 } from "@tremor/react";
 
@@ -49,9 +50,11 @@ export default function ListOfUsers() {
 									alt="avatar"
 									className="w-8 h-8 rounded-full"
 								/>
-								{item.name}
+								<Text>{item.name}</Text>
 							</TableCell>
-							<TableCell className="lowercase">{item.email}</TableCell>
+							<TableCell className="lowercase">
+								<Text>{item.email}</Text>
+							</TableCell>
 							<TableCell className="flex gap-2 items-center">
 								<button type="button" className="text-gray-400">
 									<svg
